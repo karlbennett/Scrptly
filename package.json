@@ -1,0 +1,14 @@
+{
+  "author": "Karl Bennett",
+  "name": "Scrptly",
+  "description": "A proxy that will replace all HTML script tags with a single script tag pointing to a concatenation of those that have been replaced.",
+  "version": "0.1.0",
+  "homepage": "http://karlbennett.github.com/Scrptly/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/karlbennett/Scrptly.git"
+  },
+  "engines": {
+    "node": "*"
+  }
+}
