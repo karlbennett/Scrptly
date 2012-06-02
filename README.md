@@ -56,8 +56,7 @@ Scrptly can also be used to manually concatenate a bunch of JavaScript files, th
 
 Any modules defined within the JavaScript files will be given names if they don't have them already, this is to allow them to coexist in the one file.
 
-POST
-----
+### POST
 The PUT request must have within it's body some JSON containing the URL's to the JavaScript files.
 
     curl -XPOST http://localhost:9032/cat -d '{
@@ -148,8 +147,7 @@ The response will then redirect to a URL containing the requested path:
     }
 
 
-GET
----
+### GET
 Scrptly can also concatenate scripts from a GET request, this is done by including the script URL's in the query string. The concatentation is only ever carried out once for any script signature, again irrespective of order.
 
     curl -XGET http://localhost:9032/cat?script=http%3A%2F%2Fyourpage.com%2Fscript1.js&script=http%3A%2F%2Fyourpage.com%2Fscript2.js&script=http%3A%2F%2Fyourpage.com%2Fscript3.js
