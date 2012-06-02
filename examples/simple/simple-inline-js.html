@@ -3,9 +3,11 @@
     <title>Simple Test Page - Inline JavaScript</title>
     <script type="text/javascript">
     <!--
-	document.body.innerHTML = 'Replaced text.';
+	window.onload = function () {
+	    document.body.innerHTML = 'Replaced text.';
+	};
      // -->
-    </script>`
+    </script>
 </head>
 <body>
     This text should not be here.
