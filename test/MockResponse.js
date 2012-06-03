@@ -9,12 +9,27 @@ var equal = assert.equal;
 var deepEqual = assert.deepEqual;
 
 
+/**
+ * Constant test values.
+ */
 var TEST_CODE = 200;
 var TEST_HEADERS = {'Test-Header': 'test'};
 var CONTENT_TYPE = {'Content-Type': 'text/plain'};
 var TEST_BODY = 'test body text';
 
-
+/**
+ * A mock Node.js response object that can be used to test interations.
+ * 
+ * The mocked response also contains call flags for each mocked method. The 
+ * convention for the naming of these flags is as follows.
+ * 
+ * Flag name: <method name>Called
+ * 
+ * @param code - the HTTP response code e.g. 200, 404, 500...
+ * @param headers - a map of HTTP header key value pairs.
+ * @param body - the body data to be written to the response.
+ * @returns an object containing mocks and call flags for the response methods.
+ */
 function MockResponse(code, headers, body) {
 
     return {
