@@ -42,9 +42,17 @@ fs.readdir(DIR, function (err, files) {
                 
                 var message = 'Failed ' + test + '.';
                 
-                message += ' Expected: [' + error.expected + ']';
-                message += ' Actual: [' + error.actual + ']';
-                message += ' Message: "' + error.message + '"';
+                if (error.name === 'AssertionError') {
+
+                    message += ' Expected: [' + error.expected + ']';
+                    message += ' Actual: [' + error.actual + ']';
+                    message += ' Message: "' + error.message + '"';
+
+                } else {
+                    
+                    message += ' Error: ' + error.name;
+                    message += ' Message: "' + error.message + '"';
+                }
                 
                 console.error(message);
             }
