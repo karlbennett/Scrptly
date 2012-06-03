@@ -51,7 +51,7 @@ var tests = {
     
         var called = false;
     
-        var func = function (arg) { called = arg; };
+        var func = function (arg) {called = arg;};
     
         ok(utils.isCallable(func)(true), 'the function should be callable');
         ok(called, 'the function should be called');
@@ -65,6 +65,66 @@ var tests = {
     'testIsCallableWithNull': function () {
 
         ok(!utils.isCallable(null)(true), 'the function should not be callable');
+    },
+    
+    'testIsDefined': function () {
+
+        ok(utils.isDefined(1), 'variable should be defined');
+    },
+    
+    'testIsDefinedWithNull': function () {
+
+        ok(utils.isDefined(null), 'variable should be defined');
+    },
+    
+    'testIsDefinedWithUndefined': function () {
+
+        ok(!utils.isDefined(), 'variable should not be defined');
+    },
+    
+    'testIsNotDefined': function () {
+
+        ok(!utils.isNotDefined(1), 'variable should be defined');
+    },
+    
+    'testIsNotDefinedWithNull': function () {
+
+        ok(!utils.isNotDefined(null), 'variable should be defined');
+    },
+    
+    'testIsNotDefinedWithUndefined': function () {
+
+        ok(utils.isNotDefined(), 'variable should not be defined');
+    },
+    
+    'testIsBlank': function () {
+
+        ok(!utils.isBlank(1), 'variable should not be blank');
+    },
+    
+    'testIsBlankWithNull': function () {
+
+        ok(utils.isBlank(null), 'variable should be blank');
+    },
+    
+    'testIsBlankWithUndefined': function () {
+
+        ok(utils.isBlank(), 'variable should not be blank');
+    },
+    
+    'testIsNotBlank': function () {
+
+        ok(utils.isNotBlank(1), 'variable should not be blank');
+    },
+    
+    'testIsNotBlankWithNull': function () {
+
+        ok(!utils.isNotBlank(null), 'variable should be blank');
+    },
+    
+    'testIsNotBlankWithUndefined': function () {
+
+        ok(!utils.isNotBlank(), 'variable should be blank');
     }
 }
 
