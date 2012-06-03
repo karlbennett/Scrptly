@@ -4,6 +4,7 @@
 
 var nodeUtils = require('../lib/NodeUtils');
 var assert = require('assert');
+var MockResponse = require('./MockResponse');
 
 
 var ok = assert.ok;
@@ -11,49 +12,17 @@ var equal = assert.equal;
 var deepEqual = assert.deepEqual;
 
 
-var TEST_CODE = 200;
-var TEST_HEADERS = {'Test-Header': 'test'};
-var CONTENT_TYPE = {'Content-Type': 'text/plain'};
-var TEST_BODY = 'test body text';
-
-
-function testResponse(code, headers, body) {
-
-    return {
-        'writeHead': function (codeArg, headersArg) {
-
-            equal(codeArg, code, 'http code should be correct');
-            deepEqual(headersArg, headers, 'http headers chould be correct');
-            
-            this.writeHeadCalled = true;
-        },
-        
-        'writeHeadCalled': false,
-            
-        'write': function (bodyArg) {
-
-            equal(bodyArg, body, 'response body should be correct');
-            
-            this.writeCalled = true;
-        },
-        
-        'writeCalled': false,
-            
-        'end': function () {
-
-            this.endCalled = true;
-        },
-        
-        'endCalled': false
-    };
-};
+var TEST_CODE = MockResponse.TEST_CODE;
+var TEST_HEADERS = MockResponse.TEST_HEADERS;
+var CONTENT_TYPE = MockResponse.CONTENT_TYPE;
+var TEST_BODY = MockResponse.TEST_BODY;
 
 
 var tests = {
 
     'testWriteResponse': function () {
 
-        var response = testResponse(TEST_CODE, TEST_HEADERS, TEST_BODY);
+        var response = MockResponse(TEST_CODE, TEST_HEADERS, TEST_BODY);
         
         nodeUtils.writeResponse(response, TEST_CODE, TEST_HEADERS, TEST_BODY);
         
@@ -64,7 +33,7 @@ var tests = {
     
     'testWriteResponseWithNullValues': function () {
 
-        var response = testResponse(null, null, null);
+        var response = MockResponse(null, null, null);
         
         nodeUtils.writeResponse(response, null, null, null);
         
@@ -75,7 +44,7 @@ var tests = {
     
     'testWriteStringResponse': function () {
 
-        var response = testResponse(TEST_CODE, CONTENT_TYPE, TEST_BODY);
+        var response = MockResponse(TEST_CODE, CONTENT_TYPE, TEST_BODY);
         
         nodeUtils.writeStringResponse(response, TEST_CODE, TEST_BODY);
         
@@ -86,7 +55,7 @@ var tests = {
     
     'testWriteStringResponseWithNullValues': function () {
 
-        var response = testResponse(null, CONTENT_TYPE, null);
+        var response = MockResponse(null, CONTENT_TYPE, null);
         
         nodeUtils.writeStringResponse(response, null, null);
         
