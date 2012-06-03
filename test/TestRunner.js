@@ -9,18 +9,6 @@ var DIR = './';
 var fileName = __filename.replace(__dirname + '/', '');
 
 
-/**
- * Test if the provided variable is defined.
- * 
- * @param variable - the variable to test.
- * @return true if the variable is define, otherwise false.
- */
-function isDefined (variable) {
-    
-    return typeof variable !== 'undefined';
-}
-
-
 // Run through all the test files in the current directory and exicute all the 
 // tests within them.
 fs.readdir(DIR, function (err, files) {
@@ -54,9 +42,9 @@ fs.readdir(DIR, function (err, files) {
                 
                 var message = 'Failed ' + test + '.';
                 
-                if(isDefined(error.expected)) message += ' Expected: [' + error.expected + ']';
-                if(isDefined(error.actual)) message += ' Actual: [' + error.actual + ']';
-                if(isDefined(error.message)) message += ' Message: "' + error.message + '"';
+                message += ' Expected: [' + error.expected + ']';
+                message += ' Actual: [' + error.actual + ']';
+                message += ' Message: "' + error.message + '"';
                 
                 console.error(message);
             }
