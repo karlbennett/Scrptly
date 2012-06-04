@@ -19,15 +19,22 @@ var TEST_HEADERS = MockResponse.TEST_HEADERS;
 var CONTENT_TYPE = MockResponse.CONTENT_TYPE;
 var TEST_BODY = MockResponse.TEST_BODY;
 
-var MESSAGE_404 = ErrorHandlerResolver.MESSAGE_404;
-var MESSAGE_500 = ErrorHandlerResolver.MESSAGE_500;
+var MESSAGE_404 = PageNotFoundError.MESSAGE;
+var MESSAGE_500 = ServerError.MESSAGE;
 
 var TEST_ERROR_NAME = 'TestError';
-var TEST_ERROR = function () {
+var TEST_ERROR_MESSAGE = 'test error';
+var TEST_ERROR_STACK = 'test stack';
+var TEST_ERROR_CODE = 999;
+var TEST_ERROR = function (request, response) {
     
     return {
   
-        'name': TEST_ERROR_NAME
+        'name': TEST_ERROR_NAME,
+        'message': TEST_ERROR_MESSAGE,
+        'stack': TEST_ERROR_STACK,
+        'code': TEST_ERROR_CODE,
+        'response': response
     };
 };
 
@@ -116,24 +123,17 @@ var tests = {
     
     'testErrorHandlerResolverWithNoHandlerCallback': function () {
 
-        expects(
-            function () {
-            
-                ErrorHandlerResolver()(TEST_ERROR());
-            
-            }, 
-            function (error) {
-                
-                equal(
-                    error.name, 
-                    TEST_ERROR_NAME, 
-                    'test exception should be rethrown.'
-                    );
-                
-                return true;
-            }, 
-            'error should be thrown if no handlers supplied'
+        var response = MockResponse(
+            TEST_ERROR_CODE, 
+            CONTENT_TYPE, 
+            TEST_ERROR_MESSAGE + '\n\n' + TEST_ERROR_STACK
             );
+
+        ErrorHandlerResolver()(TEST_ERROR(null, response));
+        
+        ok(response.writeHeadCalled, 'writeHead() should be called.');
+        ok(response.writeCalled, 'write() should be called.');
+        ok(response.endCalled, 'end() should be called.');
     }
 }
 
