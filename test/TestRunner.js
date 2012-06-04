@@ -52,6 +52,7 @@ fs.readdir(DIR, function (err, files) {
                     
                     message += ' Error: ' + error.name;
                     message += ' Message: "' + error.message + '"';
+                    message += '\n' + error.stack;
                 }
                 
                 console.error(message);
