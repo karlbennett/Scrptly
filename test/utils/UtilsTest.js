@@ -112,6 +112,36 @@ var tests = {
         ok(utils.isBlank(), 'variable should not be blank');
     },
     
+    'testIsBlankWithEmptyArray': function () {
+
+        ok(utils.isBlank([]), 'variable should be blank');
+    },
+    
+    'testIsBlankWithNonEmptyArray': function () {
+
+        ok(!utils.isBlank([1, 2, 3]), 'variable should not be blank');
+    },
+    
+    'testIsBlankWithEmptyMap': function () {
+
+        ok(utils.isBlank({}), 'variable should be blank');
+    },
+    
+    'testIsBlankWithNonEmptyMap': function () {
+
+        ok(!utils.isBlank({'one': 1, 'two': 2, 'three': 3}), 'variable should not be blank');
+    },
+    
+    'testIsBlankWithEmptyString': function () {
+
+        ok(utils.isBlank(''), 'variable should be blank');
+    },
+    
+    'testIsBlankWithNonEmptyString': function () {
+
+        ok(!utils.isBlank('1234'), 'variable should not be blank');
+    },
+    
     'testIsNotBlank': function () {
 
         ok(utils.isNotBlank(1), 'variable should not be blank');
@@ -125,6 +155,36 @@ var tests = {
     'testIsNotBlankWithUndefined': function () {
 
         ok(!utils.isNotBlank(), 'variable should be blank');
+    },
+
+    'testIsNotBlankWithEmptyArray': function () {
+
+        ok(!utils.isNotBlank([]), 'variable should be blank');
+    },
+    
+    'testIsNotBlankWithNonEmptyArray': function () {
+
+        ok(utils.isNotBlank([1, 2, 3]), 'variable should not be blank');
+    },
+    
+    'testIsNotBlankWithEmptyMap': function () {
+
+        ok(!utils.isNotBlank({}), 'variable should be blank');
+    },
+    
+    'testIsNotBlankWithNonEmptyMap': function () {
+
+        ok(utils.isNotBlank({'one': 1, 'two': 2, 'three': 3}), 'variable should not be blank');
+    },
+    
+    'testIsNotBlankWithEmptyString': function () {
+
+        ok(!utils.isNotBlank(''), 'variable should be blank');
+    },
+    
+    'testIsNotBlankWithNonEmptyString': function () {
+
+        ok(utils.isNotBlank('1234'), 'variable should not be blank');
     }
 }
 
