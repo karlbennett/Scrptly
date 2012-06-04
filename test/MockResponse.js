@@ -33,6 +33,7 @@ var TEST_BODY = 'test body text';
 function MockResponse(code, headers, body) {
 
     return {
+        
         'writeHead': function (codeArg, headersArg) {
 
             equal(codeArg, code, 'http code should be correct');
