@@ -2,7 +2,7 @@
  * Author: Karl Bennett
  */
 
-var RequestHandler = require('../lib/requests/RequestHandler');
+var RequestHandlerResolver = require('../lib/requests/RequestHandlerResolver');
 var ErrorHandler = require('../lib/ErrorHandler');
 var assert = require('assert');
 var MockResponse = require('./MockResponse');
@@ -39,28 +39,28 @@ var tests = {
 
     'testRequestHandler': function () {
 
-        var callback = typeof RequestHandler({});
+        var callback = typeof RequestHandlerResolver({});
         
         equal(callback, 'function', 'RequestHandler should produce a callback');
     },
     
     'testRequestHandlerWithInvalidHandlerMap': function () {
 
-        var callback = typeof RequestHandler('not a handler map');
+        var callback = typeof RequestHandlerResolver('not a handler map');
         
         equal(callback, 'function', 'RequestHandler should produce a callback');
     },
     
     'testRequestHandlerWithNull': function () {
 
-        var callback = typeof RequestHandler(null);
+        var callback = typeof RequestHandlerResolver(null);
         
         equal(callback, 'function', 'RequestHandler should produce a callback');
     },
     
     'testRequestHandlerWithUndefined': function () {
 
-        var callback = typeof RequestHandler();
+        var callback = typeof RequestHandlerResolver();
         
         equal(callback, 'function', 'RequestHandler should produce a callback');
     },
@@ -72,7 +72,7 @@ var tests = {
         expects(
             function () {
             
-                RequestHandler({})(request, null)
+                RequestHandlerResolver({})(request, null)
             
             }, 
             isPageNotFoundError, 
@@ -87,7 +87,7 @@ var tests = {
         expects(
             function () {
             
-                RequestHandler(null)(request, null)
+                RequestHandlerResolver(null)(request, null)
             
             }, 
             isPageNotFoundError, 
@@ -102,7 +102,7 @@ var tests = {
         expects(
             function () {
             
-                RequestHandler()(request, null)
+                RequestHandlerResolver()(request, null)
             
             }, 
             isPageNotFoundError, 
@@ -120,7 +120,7 @@ var tests = {
         var handlers = {};
         handlers[TEST_PATH] = function () { called = true; };
 
-        RequestHandler(handlers)(request, response);
+        RequestHandlerResolver(handlers)(request, response);
         
         ok(!response.writeHeadCalled, 'writeHead() should not be called.');
         ok(!response.writeCalled, 'write() should not be called.');
