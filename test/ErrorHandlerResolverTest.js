@@ -2,13 +2,16 @@
  * Author: Karl Bennett
  */
 
-var ErrorHandler = require('../lib/ErrorHandler');
+var PageNotFoundError = require('../lib/errors/PageNotFoundError');
+var ServerError = require('../lib/errors/ServerError');
+var ErrorHandlerResolver = require('../lib/errors/ErrorHandlerResolver');
 var assert = require('assert');
 var MockResponse = require('./MockResponse');
 
 
 var ok = assert.ok;
 var equal = assert.equal;
+var expects = assert.throws;
 
 
 var TEST_CODE = MockResponse.TEST_CODE;
@@ -16,82 +19,93 @@ var TEST_HEADERS = MockResponse.TEST_HEADERS;
 var CONTENT_TYPE = MockResponse.CONTENT_TYPE;
 var TEST_BODY = MockResponse.TEST_BODY;
 
-var MESSAGE_404 = ErrorHandler.MESSAGE_404;
-var MESSAGE_500 = ErrorHandler.MESSAGE_500;
+var MESSAGE_404 = ErrorHandlerResolver.MESSAGE_404;
+var MESSAGE_500 = ErrorHandlerResolver.MESSAGE_500;
 
+var TEST_ERROR_NAME = 'TestError';
+var TEST_ERROR = function () {
+    
+    return {
+  
+        'name': TEST_ERROR_NAME
+    };
+};
 
 var tests = {
 
-    'testErrorHandler': function () {
+    'testErrorHandlerResolver': function () {
 
-        var callback = typeof ErrorHandler({});
+        var callback = typeof ErrorHandlerResolver({});
         
-        equal(callback, 'function', 'ErrorHandler should produce a callback');
+        equal(callback, 'function', 'ErrorHandlerResolver should produce a callback');
     },
     
-    'testErrorHandlerWithInvalidHandlerMap': function () {
+    'testErrorHandlerResolverWithInvalidHandlerMap': function () {
 
-        var callback = typeof ErrorHandler('not a handler map');
+        var callback = typeof ErrorHandlerResolver('not a handler map');
         
-        equal(callback, 'function', 'ErrorHandler should produce a callback');
+        equal(callback, 'function', 'ErrorHandlerResolver should produce a callback');
     },
     
-    'testErrorHandlerWithNull': function () {
+    'testErrorHandlerResolverWithNull': function () {
 
-        var callback = typeof ErrorHandler(null);
+        var callback = typeof ErrorHandlerResolver(null);
         
-        equal(callback, 'function', 'ErrorHandler should produce a callback');
+        equal(callback, 'function', 'ErrorHandlerResolver should produce a callback');
     },
     
-    'testErrorHandlerWithUndefined': function () {
+    'testErrorHandlerResolverWithUndefined': function () {
 
-        var callback = typeof ErrorHandler();
+        var callback = typeof ErrorHandlerResolver();
         
-        equal(callback, 'function', 'ErrorHandler should produce a callback');
+        equal(callback, 'function', 'ErrorHandlerResolver should produce a callback');
     },
     
-    'testErrorHandlerCallback': function () {
+    'testErrorHandlerResolverCallback': function () {
 
         var response = MockResponse(404, CONTENT_TYPE, MESSAGE_404);
         
-        ErrorHandler({})(404, null, response, null);
+        ErrorHandlerResolver({})(PageNotFoundError(null, response));
         
         ok(response.writeHeadCalled, 'writeHead() should be called.');
         ok(response.writeCalled, 'write() should be called.');
         ok(response.endCalled, 'end() should be called.');
     },
     
-    'testErrorHandlerWithNullCallback': function () {
+    'testErrorHandlerResolverWithNullCallback': function () {
 
         var response = MockResponse(404, CONTENT_TYPE, MESSAGE_404);
         
-        ErrorHandler(null)(404, null, response, null);
+        ErrorHandlerResolver(null)(PageNotFoundError(null, response));
         
         ok(response.writeHeadCalled, 'writeHead() should be called.');
         ok(response.writeCalled, 'write() should be called.');
         ok(response.endCalled, 'end() should be called.');
     },
     
-    'testErrorHandlerWithUndefinedCallback': function () {
+    'testErrorHandlerResolverWithUndefinedCallback': function () {
 
         var response = MockResponse(404, CONTENT_TYPE, MESSAGE_404);
 
-        ErrorHandler()(404, null, response, null);
+        ErrorHandlerResolver()(PageNotFoundError(null, response));
         
         ok(response.writeHeadCalled, 'writeHead() should be called.');
         ok(response.writeCalled, 'write() should be called.');
         ok(response.endCalled, 'end() should be called.');
     },
     
-    'testErrorHandlerWithCustomHandlerCallback': function () {
+    'testErrorHandlerResolverWithCustomHandlerCallback': function () {
 
         var response = MockResponse();
 
         var called = false;
 
-        ErrorHandler({ 
-            '999': function () { called = true; } 
-        })(999, null, response, null);
+        var errorHandlers = {};
+        errorHandlers[TEST_ERROR_NAME] = function () {
+            called = true;
+        };
+
+        ErrorHandlerResolver(errorHandlers)(TEST_ERROR());
         
         ok(!response.writeHeadCalled, 'writeHead() should not be called.');
         ok(!response.writeCalled, 'write() should not be called.');
@@ -100,15 +114,26 @@ var tests = {
         ok(called, 'custom handler should be called');
     },
     
-    'testErrorHandlerWithNoHandlerCallback': function () {
+    'testErrorHandlerResolverWithNoHandlerCallback': function () {
 
-        var response = MockResponse(500, CONTENT_TYPE, MESSAGE_500);
-
-        ErrorHandler()(999, null, response, null);
-        
-        ok(response.writeHeadCalled, 'writeHead() should not be called.');
-        ok(response.writeCalled, 'write() should not be called.');
-        ok(response.endCalled, 'end() should not be called.');
+        expects(
+            function () {
+            
+                ErrorHandlerResolver()(TEST_ERROR());
+            
+            }, 
+            function (error) {
+                
+                equal(
+                    error.name, 
+                    TEST_ERROR_NAME, 
+                    'test exception should be rethrown.'
+                    );
+                
+                return true;
+            }, 
+            'error should be thrown if no handlers supplied'
+            );
     }
 }
 
