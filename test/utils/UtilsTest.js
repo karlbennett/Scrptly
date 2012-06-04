@@ -2,7 +2,7 @@
  * Author: Karl Bennett
  */
 
-var utils = require('../lib/utils/Utils');
+var utils = require('../../lib/utils/Utils');
 var assert = require('assert');
 
 
