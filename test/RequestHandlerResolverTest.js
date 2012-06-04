@@ -3,7 +3,7 @@
  */
 
 var RequestHandlerResolver = require('../lib/requests/RequestHandlerResolver');
-var ErrorHandler = require('../lib/ErrorHandler');
+var ErrorHandlerResolver = require('../lib/errors/ErrorHandlerResolver');
 var assert = require('assert');
 var MockResponse = require('./MockResponse');
 var MockRequest = require('./MockRequest');
@@ -23,8 +23,8 @@ var POST = MockRequest.POST;
 var TEST_URL = MockRequest.TEST_URL;
 var TEST_PATH = MockRequest.TEST_PATH;
 
-var MESSAGE_404 = ErrorHandler.MESSAGE_404;
-var MESSAGE_500 = ErrorHandler.MESSAGE_500;
+var MESSAGE_404 = ErrorHandlerResolver.MESSAGE_404;
+var MESSAGE_500 = ErrorHandlerResolver.MESSAGE_500;
 
 
 function isPageNotFoundError(error) {
