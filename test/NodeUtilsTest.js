@@ -2,7 +2,7 @@
  * Author: Karl Bennett
  */
 
-var nodeUtils = require('../lib/NodeUtils');
+var nodeUtils = require('../lib/utils/NodeUtils');
 var assert = require('assert');
 var MockResponse = require('./MockResponse');
 
