@@ -2,7 +2,7 @@
  * Author: Karl Bennett
  */
 
-var RequestHandler = require('../lib/RequestHandler');
+var RequestHandler = require('../lib/requests/RequestHandler');
 var ErrorHandler = require('../lib/ErrorHandler');
 var assert = require('assert');
 var MockResponse = require('./MockResponse');
@@ -11,6 +11,7 @@ var MockRequest = require('./MockRequest');
 
 var ok = assert.ok;
 var equal = assert.equal;
+var expects = assert.throws;
 
 
 var TEST_CODE = MockResponse.TEST_CODE;
@@ -24,6 +25,14 @@ var TEST_PATH = MockRequest.TEST_PATH;
 
 var MESSAGE_404 = ErrorHandler.MESSAGE_404;
 var MESSAGE_500 = ErrorHandler.MESSAGE_500;
+
+
+function isPageNotFoundError(error) {
+        
+    equal(error.name, 'PageNotFoundError', 'page not found error should be thrown');
+            
+    return true;    
+};
 
 
 var tests = {
@@ -56,40 +65,49 @@ var tests = {
         equal(callback, 'function', 'RequestHandler should produce a callback');
     },
     
-    'testRequestHandlerCallback': function () {
+    'testRequestHandlerCallbackWithNoHandlers': function () {
 
         var request = MockRequest(GET, TEST_URL);
-        var response = MockResponse(404, CONTENT_TYPE, MESSAGE_404);
-        
-        RequestHandler({})(request, response);
-        
-        ok(response.writeHeadCalled, 'writeHead() should be called.');
-        ok(response.writeCalled, 'write() should be called.');
-        ok(response.endCalled, 'end() should be called.');
+
+        expects(
+            function () {
+            
+                RequestHandler({})(request, null)
+            
+            }, 
+            isPageNotFoundError, 
+            'error should be thrown if no handlers supplied'
+            );
     },
     
-    'testRequestHandlerWithNullCallback': function () {
+    'testRequestHandlerCallbackWithNullHandlers': function () {
 
         var request = MockRequest(GET, TEST_URL);
-        var response = MockResponse(404, CONTENT_TYPE, MESSAGE_404);
-        
-        RequestHandler(null)(request, response);
-        
-        ok(response.writeHeadCalled, 'writeHead() should be called.');
-        ok(response.writeCalled, 'write() should be called.');
-        ok(response.endCalled, 'end() should be called.');
+
+        expects(
+            function () {
+            
+                RequestHandler(null)(request, null)
+            
+            }, 
+            isPageNotFoundError, 
+            'error should be thrown if no handlers supplied'
+            );
     },
     
-    'testRequestHandlerWithUndefinedCallback': function () {
+    'testRequestHandlerCallbackWithUndefinedHandlers': function () {
 
         var request = MockRequest(GET, TEST_URL);
-        var response = MockResponse(404, CONTENT_TYPE, MESSAGE_404);
 
-        RequestHandler()(request, response);
-        
-        ok(response.writeHeadCalled, 'writeHead() should be called.');
-        ok(response.writeCalled, 'write() should be called.');
-        ok(response.endCalled, 'end() should be called.');
+        expects(
+            function () {
+            
+                RequestHandler()(request, null)
+            
+            }, 
+            isPageNotFoundError, 
+            'error should be thrown if no handlers supplied'
+            );
     },
     
     'testRequestHandlerWithCustomHandlerCallback': function () {
