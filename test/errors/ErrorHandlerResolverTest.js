@@ -2,11 +2,11 @@
  * Author: Karl Bennett
  */
 
-var PageNotFoundError = require('../lib/errors/PageNotFoundError');
-var ServerError = require('../lib/errors/ServerError');
-var ErrorHandlerResolver = require('../lib/errors/ErrorHandlerResolver');
+var PageNotFoundError = require('../../lib/errors/PageNotFoundError');
+var ServerError = require('../../lib/errors/ServerError');
+var ErrorHandlerResolver = require('../../lib/errors/ErrorHandlerResolver');
 var assert = require('assert');
-var MockResponse = require('./MockResponse');
+var MockResponse = require('../MockResponse');
 
 
 var ok = assert.ok;
