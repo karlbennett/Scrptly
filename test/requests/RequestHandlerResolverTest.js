@@ -2,11 +2,11 @@
  * Author: Karl Bennett
  */
 
-var RequestHandlerResolver = require('../lib/requests/RequestHandlerResolver');
-var ErrorHandlerResolver = require('../lib/errors/ErrorHandlerResolver');
+var RequestHandlerResolver = require('../../lib/requests/RequestHandlerResolver');
+var ErrorHandlerResolver = require('../../lib/errors/ErrorHandlerResolver');
 var assert = require('assert');
-var MockResponse = require('./MockResponse');
-var MockRequest = require('./MockRequest');
+var MockResponse = require('../MockResponse');
+var MockRequest = require('../MockRequest');
 
 
 var ok = assert.ok;
