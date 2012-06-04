@@ -118,7 +118,9 @@ var tests = {
         var called = false;
 
         var handlers = {};
-        handlers[TEST_PATH] = function () { called = true; };
+        handlers[TEST_PATH + ':' + request.method] = function () { 
+            called = true; 
+        };
 
         RequestHandlerResolver(handlers)(request, response);
         
