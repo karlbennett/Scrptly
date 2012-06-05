@@ -142,7 +142,7 @@ var tests = {
         ok(called, 'custom handler should be called');
     },
     
-    'testRequestHandlerWithCustomHandlerCallbackAndParameters': function () {
+    'testRequestHandlerWithCustomHandlerCallbackWithParameters': function () {
 
         var request = MockRequest(GET, TEST_URL + '?' + TEST_PARAMETER_ONE 
             + '&' + TEST_PARAMETER_TWO + '&' + TEST_PARAMETER_THREE);
@@ -160,6 +160,94 @@ var tests = {
                 equal(three, TEST_PARAMETER_THREE_VALUE, 'argument three value should be correct');
             },
             'parameters': ['one', 'two', 'three']
+        };
+
+        RequestHandlerResolver(handlers)(request, response);
+        
+        ok(!response.writeHeadCalled, 'writeHead() should not be called.');
+        ok(!response.writeCalled, 'write() should not be called.');
+        ok(!response.endCalled, 'end() should not be called.');
+        
+        ok(called, 'custom handler should be called');
+    },
+    
+    'testRequestHandlerWithCustomHandlerCallbackWithOptionalParameters': function () {
+
+        var request = MockRequest(GET, TEST_URL + '?' + TEST_PARAMETER_ONE 
+            + '&' + TEST_PARAMETER_TWO + '&' + TEST_PARAMETER_THREE);
+        var response = MockResponse();
+
+        var called = false;
+
+        var handlers = {};
+        handlers[TEST_PATH + ':' + request.method] = {
+            'function': function (request, respoonse, one, two, three) { 
+                called = true;
+                
+                equal(one, TEST_PARAMETER_ONE_VALUE, 'argument one value should be correct');
+                equal(two, TEST_PARAMETER_TWO_VALUE, 'argument two value should be correct');
+                equal(three, TEST_PARAMETER_THREE_VALUE, 'argument three value should be correct');
+            },
+            'optional-parameters': ['one', 'two', 'three']
+        };
+
+        RequestHandlerResolver(handlers)(request, response);
+        
+        ok(!response.writeHeadCalled, 'writeHead() should not be called.');
+        ok(!response.writeCalled, 'write() should not be called.');
+        ok(!response.endCalled, 'end() should not be called.');
+        
+        ok(called, 'custom handler should be called');
+    },
+    
+    'testRequestHandlerWithCustomHandlerCallbackWithOptionalandRequiredParameters': function () {
+
+        var request = MockRequest(GET, TEST_URL + '?' + TEST_PARAMETER_ONE 
+            + '&' + TEST_PARAMETER_TWO + '&' + TEST_PARAMETER_THREE);
+        var response = MockResponse();
+
+        var called = false;
+
+        var handlers = {};
+        handlers[TEST_PATH + ':' + request.method] = {
+            'function': function (request, respoonse, one, two, three) { 
+                called = true;
+                
+                equal(one, TEST_PARAMETER_ONE_VALUE, 'argument one value should be correct');
+                equal(two, TEST_PARAMETER_TWO_VALUE, 'argument two value should be correct');
+                equal(three, TEST_PARAMETER_THREE_VALUE, 'argument three value should be correct');
+            },
+            'parameters': ['one'],
+            'optional-parameters': ['two', 'three']
+        };
+
+        RequestHandlerResolver(handlers)(request, response);
+        
+        ok(!response.writeHeadCalled, 'writeHead() should not be called.');
+        ok(!response.writeCalled, 'write() should not be called.');
+        ok(!response.endCalled, 'end() should not be called.');
+        
+        ok(called, 'custom handler should be called');
+    },
+    
+    'testRequestHandlerWithCustomHandlerCallbackWithOptionalandRequiredParametersSomeMissing': function () {
+
+        var request = MockRequest(GET, TEST_URL + '?' + TEST_PARAMETER_ONE 
+            + '&' + TEST_PARAMETER_TWO);
+        var response = MockResponse();
+
+        var called = false;
+
+        var handlers = {};
+        handlers[TEST_PATH + ':' + request.method] = {
+            'function': function (request, respoonse, one, two, three) { 
+                called = true;
+                
+                equal(one, TEST_PARAMETER_ONE_VALUE, 'argument one value should be correct');
+                equal(two, TEST_PARAMETER_TWO_VALUE, 'argument two value should be correct');
+            },
+            'parameters': ['one'],
+            'optional-parameters': ['two', 'three']
         };
 
         RequestHandlerResolver(handlers)(request, response);
