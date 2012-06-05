@@ -43,7 +43,7 @@ function runTests (dir) {
             var tests = require(dir + testFiles[i]);
 
             for (var test in tests) {
-            
+                // Run each test and display an error message on each failure.
                 try {
                 
                     tests[test]();
