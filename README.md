@@ -1,3 +1,5 @@
+*NOTE:* Pretty much none of the munctionality below is working, but hopefully it will soon enough.
+
 Scrptly
 =======
 
