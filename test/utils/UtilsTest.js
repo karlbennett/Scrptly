@@ -9,20 +9,21 @@ var assert = require('assert');
 var ok = assert.ok;
 var equal = assert.equal;
 
-var NON_FUNCTION = 'not a function';
+var OBJECT = { 'this': 'is', 'an': 'object' };
+var ARRAY = ['this', 'is', 'an', 'array'];
+var FUNCTION = function () {return 'this is a function';};
+var STRING = 'this is a string';
 
 var tests = {
 
     'testIsFunction': function () {
 
-        var func = function () {};
-    
-        ok(utils.isFunction(func), 'function should be found');
+        ok(utils.isFunction(FUNCTION), 'function should be found');
     },
     
     'testIsFunctionWithNonFunction': function () {
     
-        ok(!utils.isFunction(NON_FUNCTION), 'no function should be found');
+        ok(!utils.isFunction(STRING), 'no function should be found');
     },
     
     'testIsFunctionWithNull': function () {
@@ -32,21 +33,109 @@ var tests = {
     
     'testIsNotFunction': function () {
 
-        var func = function () {};
-    
-        ok(!utils.isNotFunction(func), 'function should be found');
+        ok(!utils.isNotFunction(FUNCTION), 'function should be found');
     },
     
     'testIsNotFunctionWithNonFunction': function () {
     
-        ok(utils.isNotFunction(NON_FUNCTION), 'no function should be found');
+        ok(utils.isNotFunction(STRING), 'no function should be found');
     },
     
     'testIsNotFunctionWithNull': function () {
     
         ok(utils.isNotFunction(null), 'no function should be found');
     },
+
+    'testIsObject': function () {
+
+        ok(utils.isObject(OBJECT), 'object should be found');
+    },
     
+    'testIsObjectWithNonObject': function () {
+    
+        ok(!utils.isObject(STRING), 'no object should be found');
+    },
+    
+    'testIsObjectWithNull': function () {
+    
+        ok(!utils.isObject(null), 'no object should be found');
+    },
+    
+    'testIsNotObject': function () {
+
+        ok(!utils.isNotObject(OBJECT), 'object should be found');
+    },
+    
+    'testIsNotObjectWithNonObject': function () {
+    
+        ok(utils.isNotObject(STRING), 'no object should be found');
+    },
+    
+    'testIsNotObjectWithNull': function () {
+    
+        ok(utils.isNotObject(null), 'no object should be found');
+    },
+ 
+    'testIsArray': function () {
+
+        ok(utils.isArray(ARRAY), 'array should be found');
+    },
+    
+    'testIsArrayWithNonObject': function () {
+    
+        ok(!utils.isArray(STRING), 'no array should be found');
+    },
+    
+    'testIsArrayWithNull': function () {
+    
+        ok(!utils.isArray(null), 'no array should be found');
+    },
+    
+    'testIsNotArray': function () {
+
+        ok(!utils.isNotArray(ARRAY), 'array should be found');
+    },
+    
+    'testIsNotArrayWithNonObject': function () {
+    
+        ok(utils.isNotArray(STRING), 'no array should be found');
+    },
+    
+    'testIsNotArrayWithNull': function () {
+    
+        ok(utils.isNotArray(null), 'no array should be found');
+    },
+ 
+    'testIsString': function () {
+
+        ok(utils.isString(STRING), 'string should be found');
+    },
+    
+    'testIsStringWithNonObject': function () {
+    
+        ok(!utils.isString(OBJECT), 'no string should be found');
+    },
+    
+    'testIsStringWithNull': function () {
+    
+        ok(!utils.isString(null), 'no string should be found');
+    },
+    
+    'testIsNotString': function () {
+
+        ok(!utils.isNotString(STRING), 'string should be found');
+    },
+    
+    'testIsNotStringWithNonObject': function () {
+    
+        ok(utils.isNotString(OBJECT), 'no string should be found');
+    },
+    
+    'testIsNotStringWithNull': function () {
+    
+        ok(utils.isNotString(null), 'no string should be found');
+    },
+ 
     'testIsCallable': function () {
     
         var called = false;
@@ -59,7 +148,7 @@ var tests = {
     
     'testIsCallableWithNonFunction': function () {
 
-        ok(!utils.isCallable(NON_FUNCTION)(true), 'the function should not be callable');
+        ok(!utils.isCallable(STRING)(true), 'the function should not be callable');
     },
     
     'testIsCallableWithNull': function () {
