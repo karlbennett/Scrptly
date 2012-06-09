@@ -3,9 +3,9 @@
  */
 
 var http = require('http');
-var RequestHandlerResolver = require('./requests/RequestHandlerResolver');
-var ErrorHandlerResolver = require('./errors/ErrorHandlerResolver');
-var ScrptlyRequestHandlers = require('./ScrptlyRequestHandlers');
+var RequestHandlerResolver = require('./lib/requests/RequestHandlerResolver');
+var ErrorHandlerResolver = require('./lib/errors/ErrorHandlerResolver');
+var ScrptlyRequestHandlers = require('./lib/ScrptlyRequestHandlers');
 
 
 http.createServer(RequestHandlerResolver(ScrptlyRequestHandlers)).listen(9032);
