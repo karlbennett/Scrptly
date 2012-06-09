@@ -1,0 +1,24 @@
+<html>
+<head>
+    <title>Simple Test Page - RequireJS</title>
+    <script type="text/javascript" src="http://localhost/require.js"></script>
+    <script type="text/javascript">
+        require(['./script1.js', 
+            './script2.js', 
+            './script3.js'], 
+        function(one, two, three) {
+                
+            window.document.body.innerHTML = 'RequireJS has loaded.';
+            
+            one.appendText();
+            two.appendText();
+            three.appendText();
+        });
+        
+        window.document.body.innerHTML = 'loaded again.';
+    </script>
+</head>
+<body>
+    This text should not be here.
+</body>
+</html>
