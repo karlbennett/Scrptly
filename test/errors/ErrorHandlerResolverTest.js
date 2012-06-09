@@ -126,7 +126,7 @@ var tests = {
         var response = MockResponse(
             TEST_ERROR_CODE, 
             CONTENT_TYPE, 
-            TEST_ERROR_MESSAGE + '\n\n' + TEST_ERROR_STACK
+            TEST_ERROR_STACK
             );
 
         ErrorHandlerResolver()(TEST_ERROR(null, response));
