@@ -19,28 +19,30 @@ function runTests (dir) {
         // Iterate over all the files within the current directory and only keep
         // the test files.
         for (var i in files) {
+            
+            var file = dir + files[i];
 
             if (
-                fileName !== files[i] && 
-                -1 != files[i].toLowerCase().indexOf('test')
+                fileName !== file && 
+                -1 != file.toLowerCase().indexOf('test')
                 ) {
 
-                testFiles.push(files[i]);
+                testFiles.push(file);
             
             // If the file is not a test file check to see if it is a 
             // subdirectory.
-            } else if (fs.statSync(files[i]).isDirectory()) {
+            } else if (fs.statSync(file).isDirectory()) {
             
                 // If it is recursively call the runTests function on the 
                 // subdirectory.
-                fs.readdir(files[i], runTests(dir + files[i] + '/'));
+                fs.readdir(file, runTests(file + '/'));
             }
         }
 
         // Iterate over the test files and runn all the test within them.
         for (var i in testFiles) {
 
-            var tests = require(dir + testFiles[i]);
+            var tests = require(testFiles[i]);
 
             for (var test in tests) {
                 // Run each test and display an error message on each failure.
