@@ -24,7 +24,7 @@ var tests = {
 
     'testRetrieveScripts': function () {
 
-        catUtils.retrieveScripts([SCRIPT_URL_ONE, SCRIPT_URL_TWO, SCRIPT_URL_THREE], function (code) {
+        catUtils.retrieveScripts([SCRIPT_URL_ONE, SCRIPT_URL_TWO, SCRIPT_URL_THREE], function (error, code) {
             
             ok(isNotBlank(code), 'code should be retrived');
         });
@@ -32,7 +32,7 @@ var tests = {
     
     'testRetrieveScriptsWithPreviousCode': function () {
 
-        catUtils.retrieveScripts([SCRIPT_URL_ONE, SCRIPT_URL_TWO, SCRIPT_URL_THREE], function (code) {
+        catUtils.retrieveScripts([SCRIPT_URL_ONE, SCRIPT_URL_TWO, SCRIPT_URL_THREE], function (error, code) {
             
             ok(isNotBlank(code), 'code should be retrived');
             ok(-1 != code.indexOf(PREVIOUS_CODE), 'code should contain previous code');
@@ -41,17 +41,27 @@ var tests = {
     
     'testRetrieveScriptsWithSingleUrl': function () {
 
-        catUtils.retrieveScripts(SCRIPT_URL_ONE, function (code) {
+        catUtils.retrieveScripts(SCRIPT_URL_ONE, function (error, code) {
             
             ok(isNotBlank(code), 'code should be retrived');
         });
     },
     
+    'testRetrieveScriptsWithInvalidScriptUrl': function () {
+
+        catUtils.retrieveScripts('points to nothing', function (error, code) {
+
+            ok(isBlank(code), 'no code should be retrived');
+            equal(error.name, 'InvalidResponseCodeError', 'correct error exposed')
+        });
+    },
+    
     'testRetrieveScriptsWithNullUrl': function () {
 
-        catUtils.retrieveScripts(null, function (code) {
+        catUtils.retrieveScripts(null, function (error, code) {
             
             ok(isBlank(code), 'no code should be retrived');
+            equal(error.name, 'IllegalArgumentError', 'correct error exposed')
         });
     }
 }
