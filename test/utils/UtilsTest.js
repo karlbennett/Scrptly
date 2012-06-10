@@ -13,6 +13,7 @@ var OBJECT = { 'this': 'is', 'an': 'object' };
 var ARRAY = ['this', 'is', 'an', 'array'];
 var FUNCTION = function () {return 'this is a function';};
 var STRING = 'this is a string';
+var NUMBER = 32;
 
 var tests = {
 
@@ -134,6 +135,36 @@ var tests = {
     'testIsNotStringWithNull': function () {
     
         ok(utils.isNotString(null), 'no string should be found');
+    },
+    
+    'testIsNumber': function () {
+
+        ok(utils.isNumber(NUMBER), 'number should be found');
+    },
+    
+    'testIsNumberWithNonObject': function () {
+    
+        ok(!utils.isNumber(OBJECT), 'no number should be found');
+    },
+    
+    'testIsNumberWithNull': function () {
+    
+        ok(!utils.isNumber(null), 'no number should be found');
+    },
+    
+    'testIsNotNumber': function () {
+
+        ok(!utils.isNotNumber(NUMBER), 'number should be found');
+    },
+    
+    'testIsNotNumberWithNonObject': function () {
+    
+        ok(utils.isNotNumber(OBJECT), 'no number should be found');
+    },
+    
+    'testIsNotNumberWithNull': function () {
+    
+        ok(utils.isNotNumber(null), 'no number should be found');
     },
  
     'testIsCallable': function () {
