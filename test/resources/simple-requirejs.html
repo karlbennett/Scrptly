@@ -8,11 +8,14 @@
             './script3.js'], 
         function(one, two, three) {
                 
-            window.document.body.innerHTML = 'RequireJS has loaded.';
+            window.onload = function () {
+                
+                window.document.body.innerHTML = 'RequireJS has loaded.';
             
-            one.appendText();
-            two.appendText();
-            three.appendText();
+                one.appendText();
+                two.appendText();
+                three.appendText();
+            };
         });
         
         window.document.body.innerHTML = 'loaded again.';
