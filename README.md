@@ -39,7 +39,7 @@ Would be changed to this:
     <html>
     <head>
         <title>Your Page</title>
-        <script type="text/javascript" src="http://localhost:9032/KpgVGM"></script>
+        <script type="text/javascript" src="http://localhost:9032/script/KpgVGM"></script>
     </head>
     <body>
         This page contains JavaScript.
@@ -75,7 +75,7 @@ The response to this request will be an HTTP 302 that will redirect the to a gen
     Location: http://localhost:9032/KpgVGM
     Content-Type: application/json
     {
-        "url": "http://localhost:9032/KpgVGM"
+        "url": "http://localhost:9032/script/KpgVGM"
     }
 
 The generated URL for a fixed set of scripts will always be the same, irrespective of the ordering. So the following script sets will always produce the same URL.
@@ -145,7 +145,7 @@ The response will then redirect to a URL containing the requested path:
     Location: http://localhost:9032/yourpage
     Content-Type: application/json
     {
-        "url": "http://localhost:9032/yourpage"
+        "url": "http://localhost:9032/script/yourpage"
     }
 
 
