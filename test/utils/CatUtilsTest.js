@@ -13,6 +13,8 @@ var isNotBlank = utils.isNotBlank;
 var isBlank = utils.isBlank;
 
 
+var HOST = 'http://localhost';
+var PATH = '/';
 var SCRIPT_URL_ONE = 'http://localhost/script1.js';
 var SCRIPT_URL_TWO = 'http://localhost/script2.js';
 var SCRIPT_URL_THREE = 'http://localhost/script3.js';
@@ -24,7 +26,7 @@ var tests = {
 
     'testRetrieveScripts': function () {
 
-        catUtils.retrieveScripts([SCRIPT_URL_ONE, SCRIPT_URL_TWO, SCRIPT_URL_THREE], function (error, code) {
+        catUtils.retrieveScripts(HOST, PATH, [SCRIPT_URL_ONE, SCRIPT_URL_TWO, SCRIPT_URL_THREE], function (error, code) {
             
             ok(isNotBlank(code), 'code should be retrived');
         });
@@ -32,7 +34,7 @@ var tests = {
     
     'testRetrieveScriptsWithPreviousCode': function () {
 
-        catUtils.retrieveScripts([SCRIPT_URL_ONE, SCRIPT_URL_TWO, SCRIPT_URL_THREE], function (error, code) {
+        catUtils.retrieveScripts(HOST, PATH, [SCRIPT_URL_ONE, SCRIPT_URL_TWO, SCRIPT_URL_THREE], function (error, code) {
             
             ok(isNotBlank(code), 'code should be retrived');
             ok(-1 != code.indexOf(PREVIOUS_CODE), 'code should contain previous code');
@@ -41,7 +43,7 @@ var tests = {
     
     'testRetrieveScriptsWithSingleUrl': function () {
 
-        catUtils.retrieveScripts(SCRIPT_URL_ONE, function (error, code) {
+        catUtils.retrieveScripts(HOST, PATH, SCRIPT_URL_ONE, function (error, code) {
             
             ok(isNotBlank(code), 'code should be retrived');
         });
@@ -49,7 +51,7 @@ var tests = {
     
     'testRetrieveScriptsWithInvalidScriptUrl': function () {
 
-        catUtils.retrieveScripts('points to nothing', function (error, code) {
+        catUtils.retrieveScripts(HOST, PATH, 'points to nothing', function (error, code) {
 
             ok(isBlank(code), 'no code should be retrived');
             equal(error.name, 'InvalidResponseCodeError', 'correct error exposed')
@@ -58,7 +60,7 @@ var tests = {
     
     'testRetrieveScriptsWithNullUrl': function () {
 
-        catUtils.retrieveScripts(null, function (error, code) {
+        catUtils.retrieveScripts(HOST, PATH, null, function (error, code) {
             
             ok(isBlank(code), 'no code should be retrived');
             equal(error.name, 'IllegalArgumentError', 'correct error exposed')
