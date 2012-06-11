@@ -52,7 +52,12 @@ var tests = {
         ok(utils.isObject(OBJECT), 'object should be found');
     },
     
-    'testIsObjectWithNonObject': function () {
+    'testIsObjectWithArray': function () {
+    
+        ok(utils.isObject(ARRAY), 'no object should be found');
+    },
+    
+    'testIsObjectWithString': function () {
     
         ok(!utils.isObject(STRING), 'no object should be found');
     },
@@ -67,7 +72,12 @@ var tests = {
         ok(!utils.isNotObject(OBJECT), 'object should be found');
     },
     
-    'testIsNotObjectWithNonObject': function () {
+    'testIsNotObjectWithArray': function () {
+    
+        ok(!utils.isNotObject(ARRAY), 'no object should be found');
+    },
+    
+    'testIsNotObjectWithString': function () {
     
         ok(utils.isNotObject(STRING), 'no object should be found');
     },
@@ -82,7 +92,12 @@ var tests = {
         ok(utils.isArray(ARRAY), 'array should be found');
     },
     
-    'testIsArrayWithNonObject': function () {
+    'testIsArrayWithObject': function () {
+    
+        ok(!utils.isArray(OBJECT), 'no array should be found');
+    },
+    
+    'testIsArrayWithString': function () {
     
         ok(!utils.isArray(STRING), 'no array should be found');
     },
@@ -97,7 +112,12 @@ var tests = {
         ok(!utils.isNotArray(ARRAY), 'array should be found');
     },
     
-    'testIsNotArrayWithNonObject': function () {
+    'testIsNotArrayWithObject': function () {
+    
+        ok(utils.isNotArray(OBJECT), 'no array should be found');
+    },
+    
+    'testIsNotArrayWithString': function () {
     
         ok(utils.isNotArray(STRING), 'no array should be found');
     },
@@ -112,7 +132,12 @@ var tests = {
         ok(utils.isString(STRING), 'string should be found');
     },
     
-    'testIsStringWithNonObject': function () {
+    'testIsStringWithObject': function () {
+    
+        ok(!utils.isString(OBJECT), 'no string should be found');
+    },
+    
+    'testIsStringWithArray': function () {
     
         ok(!utils.isString(OBJECT), 'no string should be found');
     },
@@ -127,7 +152,12 @@ var tests = {
         ok(!utils.isNotString(STRING), 'string should be found');
     },
     
-    'testIsNotStringWithNonObject': function () {
+    'testIsNotStringWithObject': function () {
+    
+        ok(utils.isNotString(OBJECT), 'no string should be found');
+    },
+    
+    'testIsNotStringWithArray': function () {
     
         ok(utils.isNotString(OBJECT), 'no string should be found');
     },
