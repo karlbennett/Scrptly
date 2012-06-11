@@ -59,11 +59,10 @@ Scrptly can also be used to manually concatenate a bunch of JavaScript files, th
 Any modules defined within the JavaScript files will be given names if they don't have them already, this is to allow them to coexist in the one file.
 
 ### POST
-The PUT request must have within it's body some JSON containing the host url for the server the JavaScript file are on, the path to where the files reside, and the absolute or relative URL's to the JavaScript files.
+The PUT request must have within it's body some JSON containing the url of the page that the JavaScript file url's were extracted from and the absolute or relative URL's to the JavaScript files.
 
     curl -XPOST http://localhost:9032/cat -d '{
-        "host": 'http://yourpage.com',
-        "path": '/scripts',
+        "page": 'http://yourpage.com',
         "scripts": [
         "http://yourpage.com/scripts/script1.js",
         "script2.js",
@@ -133,7 +132,7 @@ Where as these three sets will all produce different URL's:
 It is also possible to provide a static path for the concatenated JavaScript if one is required. Though the related JavaScript will be overwritten if it is called with a different script signature.
 
     curl -XPOST http://localhost:9032/cat -d '{
-        "static-path": "/yourpage"
+        "path": "/yourpage"
         "scripts": [
             "http://yourpage.com/script1.js",
             "http://yourpage.com/script2.js",
